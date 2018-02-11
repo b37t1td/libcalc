@@ -19,8 +19,14 @@ endif()
 
 include_directories("${PROJECT_SOURCE_DIR}/include")
 
-# Cmake wrapper does not work properly with tests
-# enable_testing()
+add_library(calc SHARED
+  ./src/libcalc.cxx
+  ./src/parser.cxx
+  ./src/tokenizer.cxx
+  ./src/evaluator.cxx
+  )
 
-add_subdirectory(${PROJECT_SOURCE_DIR}/src)
-add_subdirectory(${PROJECT_SOURCE_DIR}/tests)
+add_executable(RunTests ./tests/test-calc.cxx)
+target_link_libraries(RunTests calc)
+
+add_custom_target(Test COMMAND ./RunTests)

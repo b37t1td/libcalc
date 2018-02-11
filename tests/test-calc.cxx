@@ -12,9 +12,19 @@ TEST_CASE("Should test is project setup works", "Bootstrap" ) {
   REQUIRE((2 + 2) == 4);
 }
 
-TEST_CASE("Should construct a valid Token", "Token") {
+TEST_CASE("Should construct a valid Token", "Tokenizer") {
   Token *t = new Token();
   REQUIRE(t->type == TOKEN_TYPE.GARBAGE);
-  REQUIRE(t->value == '\0');
+  delete t;
+
+  t = new Token('3');
+  REQUIRE(t->value == '3');
+  REQUIRE(t->type == TOKEN_TYPE.SYMBOL);
+
+  delete t;
+
+  t = new Token('+');
+  REQUIRE(t->value == '+');
+  REQUIRE(t->type == TOKEN_TYPE.OPERATOR);
 }
 

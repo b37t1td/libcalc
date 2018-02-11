@@ -6,37 +6,44 @@
 
 namespace libcalc {
 
-  struct {
-    const char OPERATOR { 1 };
-    const char SYMBOL   { 2 };
-    const char GARBAGE  { 3 };
+struct {
+  const char OPERATOR { 1 };
+  const char SYMBOL   { 2 };
+  const char GARBAGE  { 3 };
 
-  } const TOKEN_TYPE;
+} const TOKEN_TYPE;
 
-  struct {
-    const char ADD { '+' };
-    const char SUB { '-' };
-    const char MLT { '*' };
-    const char DIV { '/' };
-    const char LPN { '(' };
-    const char RPN { ')' };
-    const char MOD { '%' };
-    const char PWR { '^' };
-    const char FAC { '!' };
+struct {
+  const char ADD { '+' };
+  const char SUB { '-' };
+  const char MLT { '*' };
+  const char DIV { '/' };
+  const char LPN { '(' };
+  const char RPN { ')' };
+  const char MOD { '%' };
+  const char PWR { '^' };
+  const char FAC { '!' };
 
-  } const TOKEN_OPERATOR;
+} const TOKEN_OPERATOR;
 
+const char TOKEN_SYMBOLS[] = "0123456789+-*/()%^!e.";
+const short TOKEN_SYMBOLS_LEN = sizeof(TOKEN_SYMBOLS);
 
-  const char TOKEN_SYMBOLS[] {
-    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.', 'e'
-  };
+class Token {
+  public:
+    Token();
+    Token(const char symbol);
+    char type;
+    char value;
 
-  class Token {
-    public:
-      char type { TOKEN_TYPE.GARBAGE };
-      char value { '\0' };
-  };
+  private:
+    void create(const char symbol);
+};
 
+const char symbolType(const char symbol);
+bool isOperator(const char symbol);
+
+/* parser.cxx */
 std::vector<Token> parse(const std::string expression);
 
 }
