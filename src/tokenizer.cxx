@@ -2,18 +2,48 @@
 
 namespace libcalc {
 
-Token::Token() {
-  create(-1);
-}
+/*
+ * Token
+ */
+
+Token::Token() { }
 
 Token::Token(const char symbol) {
-  create(symbol);
+  push(symbol);
 }
 
-void Token::create(const char symbol) {
-  type = symbolType(symbol);
-  value = symbol;
+bool Token::push(const char symbol) {
+  char st = symbolType(symbol);
+
+  if (st == TOKEN_TYPE.GARBAGE) {
+    return false;
+  }
+
+  if (type == TOKEN_TYPE.SYMBOL && st == type) {
+    value += symbol;
+    return true;
+  }
+
+  if (type == TOKEN_TYPE.EMPTY) {
+    type = st;
+    value = symbol;
+    return true;
+  }
+
+  if (type == TOKEN_TYPE.OPERATOR &&
+      st == TOKEN_TYPE.SYMBOL     &&
+      value == "-" ) {
+    type = st;
+    value += symbol;
+    return true;
+  }
+
+  return false;
 }
+
+/*
+ *  Tokenizer
+ */
 
 Tokenizer::Tokenizer() { }
 
@@ -26,8 +56,14 @@ Tokenizer::Tokenizer(std::string expression) {
 }
 
 void Tokenizer::parse(std::string expression) {
+  Token *t = new Token();
+  tokens.push_back(t);
+
   for (char e : expression) {
-    tokens.push_back(new Token(e));
+    if (!t->push(e)) {
+      t = new Token(e);
+      tokens.push_back(t);
+    }
   }
 }
 

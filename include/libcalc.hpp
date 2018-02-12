@@ -7,6 +7,7 @@
 namespace libcalc {
 
 struct {
+  const char EMPTY    { 0 };
   const char OPERATOR { 1 };
   const char SYMBOL   { 2 };
   const char GARBAGE  { 3 };
@@ -34,24 +35,24 @@ bool isOperator(const char symbol);
 
 class Token {
   public:
+    std::string value;
+    char type { TOKEN_TYPE.EMPTY };
+
     Token();
     Token(const char symbol);
-    char type;
-    char value;
-
-  private:
-    void create(const char symbol);
+    bool push(const char symbol);
 };
 
 class Tokenizer {
   public:
-    Tokenizer(std::string expression);
+    std::vector<Token *> tokens;
+
     Tokenizer();
     ~Tokenizer();
+    Tokenizer(std::string expression);
     void parse(std::string expression);
 
   private:
-    std::vector<Token *> tokens;
     void clear();
 };
 
