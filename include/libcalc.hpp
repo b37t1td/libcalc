@@ -29,6 +29,9 @@ struct {
 const char TOKEN_SYMBOLS[] = "0123456789+-*/()%^!e.";
 const short TOKEN_SYMBOLS_LEN = sizeof(TOKEN_SYMBOLS);
 
+const char symbolType(const char symbol);
+bool isOperator(const char symbol);
+
 class Token {
   public:
     Token();
@@ -40,11 +43,17 @@ class Token {
     void create(const char symbol);
 };
 
-const char symbolType(const char symbol);
-bool isOperator(const char symbol);
+class Tokenizer {
+  public:
+    Tokenizer(std::string expression);
+    Tokenizer();
+    ~Tokenizer();
+    void parse(std::string expression);
 
-/* parser.cxx */
-std::vector<Token> parse(const std::string expression);
+  private:
+    std::vector<Token *> tokens;
+    void clear();
+};
 
 }
 

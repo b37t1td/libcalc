@@ -21,7 +21,6 @@ include_directories("${PROJECT_SOURCE_DIR}/include")
 
 add_library(calc SHARED
   ./src/libcalc.cxx
-  ./src/parser.cxx
   ./src/tokenizer.cxx
   ./src/evaluator.cxx
   )

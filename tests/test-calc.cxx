@@ -28,3 +28,14 @@ TEST_CASE("Should construct a valid Token", "Tokenizer") {
   REQUIRE(t->type == TOKEN_TYPE.OPERATOR);
 }
 
+
+TEST_CASE("Should parse basic expressions for Tokenizer", "Tokenizer") {
+  std::string expr = "22 + 44";
+
+  Tokenizer *t = new Tokenizer(expr);
+  delete t;
+
+  t = new Tokenizer(expr);
+
+}
+
