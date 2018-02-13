@@ -35,7 +35,7 @@ add_library(calc SHARED
 
 include(GNUInstallDirs)
 
-set(PUBLIC_HEADER "include/libcalc.hpp")
+set(PUBLIC_HEADER "${PROJECT_SOURCE_DIR}/include/libcalc.hpp")
 
 set(DEST_DIR "${CMAKE_INSTALL_PREFIX}")
 set(PRIVATE_LIBS "${PRIVATE_LIBS} -lcalc")
@@ -45,9 +45,9 @@ configure_file(libcalc.pc.in libcalc.pc @ONLY)
 
 target_include_directories(calc PRIVATE .)
 
-install(TARGETS calc
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+install(TARGETS calc LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
+install(FILES ${PUBLIC_HEADER} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
 install(FILES ${CMAKE_BINARY_DIR}/libcalc.pc
     DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/pkgconfig)
