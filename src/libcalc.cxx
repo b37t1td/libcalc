@@ -49,4 +49,14 @@ int factorial(int n) {
   return (n == 1 || n == 0) ? 1 : factorial(n - 1) * n;
 }
 
+double eval(std::string expr) {
+  double result = 0;
+
+  Tokenizer *t = new Tokenizer(expr);
+  result = t->evaluate();
+  delete t;
+
+  return result;
+}
+
 }

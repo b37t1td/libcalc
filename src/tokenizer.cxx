@@ -148,12 +148,12 @@ double Tokenizer::evaluate() {
   for (Token *t : toRPN()) {
     if (t->type == TOKEN_TYPE.OPERATOR) {
 
-      l = temp.top();
+      r = temp.top();
       temp.pop();
 
       o = t->value.c_str()[0];
 
-      r = temp.top();
+      l = temp.top();
       temp.pop();
 
       switch(o) {

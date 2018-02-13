@@ -93,10 +93,10 @@ TEST_CASE("Should generate a valid RPN", "Tokenizer") {
 }
 
 TEST_CASE("Should evaluate RPN", "Tokenizer") {
-  std::string expr = "(2 + 1) * 2";
+  std::string expr = "( 5 - 3 ) * 2";
 
   Tokenizer *t = new Tokenizer(expr);
-  REQUIRE(t->evaluate() == 6);
+  REQUIRE(t->evaluate() == 4);
   delete t;
 
   expr = "2 + 4 * 2";
@@ -110,5 +110,13 @@ TEST_CASE("Should evaluate RPN", "Tokenizer") {
   t = new Tokenizer(expr);
   REQUIRE(t->evaluate() == 1);
   delete t;
+}
+
+TEST_CASE("Should provide very basic API", "libcalc") {
+  REQUIRE(eval("2 + 2") == 4);
+  REQUIRE(eval("2 * ( 1 + 1 )") == 4);
+  REQUIRE(eval("( 1 + 1 ) * 2") == 4);
+  REQUIRE(eval("(5 - 4) + 3") == 4);
+  REQUIRE(eval("6 / ( 1 + 2) + 2") == 4);
 }
 
