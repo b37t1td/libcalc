@@ -20,19 +20,37 @@ into
 ### Installation
 
 ```
+  git clone git@github.com:b37t1td/libcalc.git
+  cd libcalc
   take build
   cmake ..
   cpack
-  dpkg -i libcalc_*.deb
+  sudo dpkg -i libcalc_*.deb
 
 ```
 
 ### Usage
 
+Example of `test.cxx`
+
+```c++
+#include <iostream>
+#include <libcalc.hpp>
+
+int main() {
+  std::cout << libcalc::eval("2 * ( 5 - 3 )") << std::endl;
+}
 ```
 
+Which we build with:
+
 ```
+g++ -std=c++11 -Wall test.cxx `pkg-config --libs --cflags libcalc`
+```
+
+So, run it `./a.out` and you will see `4`.
 
 ### License
 
+MIT
 
