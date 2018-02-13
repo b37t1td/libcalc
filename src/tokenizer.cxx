@@ -141,13 +141,39 @@ std::vector<Token *> Tokenizer::toRPN() {
 }
 
 double Tokenizer::evaluate() {
-  std::stack<Token *> op;
+  std::stack<double> temp;
+  double l, a, r;
+  char o;
 
-  for (Token *t : tokens) {
-    op.push(t);
+  for (Token *t : toRPN()) {
+    if (t->type == TOKEN_TYPE.OPERATOR) {
+
+      l = temp.top();
+      temp.pop();
+
+      o = t->value.c_str()[0];
+
+      r = temp.top();
+      temp.pop();
+
+      switch(o) {
+        case '+': a =  l + r ; break;
+        case '-': a =  l - r ; break;
+        case '*': a =  l * r ; break;
+        case '/': a =  l / r ; break;
+        case '%': a =  (int)l % (int) r ; break;
+        case '^': a =  (int)l ^ (int)r ; break;
+        case '!': a =  factorial(r) ; break;
+      }
+
+      temp.push(a);
+
+    } else {
+      temp.push(std::atof(t->value.c_str()));
+    }
   }
 
-  return 0;
+  return temp.top();
 }
 
 }

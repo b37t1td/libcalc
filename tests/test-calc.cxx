@@ -93,6 +93,22 @@ TEST_CASE("Should generate a valid RPN", "Tokenizer") {
 }
 
 TEST_CASE("Should evaluate RPN", "Tokenizer") {
+  std::string expr = "(2 + 1) * 2";
 
+  Tokenizer *t = new Tokenizer(expr);
+  REQUIRE(t->evaluate() == 6);
+  delete t;
+
+  expr = "2 + 4 * 2";
+
+  t = new Tokenizer(expr);
+  REQUIRE(t->evaluate() == 10);
+  delete t;
+
+  expr = "1 + (3 % 3)";
+
+  t = new Tokenizer(expr);
+  REQUIRE(t->evaluate() == 1);
+  delete t;
 }
 

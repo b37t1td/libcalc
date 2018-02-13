@@ -59,6 +59,7 @@ class Tokenizer {
 };
 
 std::string t2s(std::vector<Token *> tokens);
+int factorial(int n);
 
 }
 
