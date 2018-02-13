@@ -64,3 +64,35 @@ TEST_CASE("Should parse non-regular numbers", "Tokenizer") {
   delete t;
 }
 
+TEST_CASE("Should generate a valid RPN", "Tokenizer") {
+  std::string expr1 = "-4 * ( 2 + -2) - 1";
+  std::string expr2 = "4 * ( 2 + 2) - 1";
+  std::string expr3 = "( 2 - 3 ) * 2 + 4 / 2";
+  std::string expr4 = "( 2 - 3 ) % 2 + 4 ^ 2 + 2";
+  std::string expr5 = "( 2 - 3 ) % 2 + 4 ! 2 + 2";
+
+  Tokenizer *t = new Tokenizer(expr1);
+  REQUIRE(t2s(t->toRPN()) == "-4 2 -2 + * 1 -");
+  delete t;
+
+  t = new Tokenizer(expr2);
+  REQUIRE(t2s(t->toRPN()) == "4 2 2 + * 1 -");
+  delete t;
+
+  t = new Tokenizer(expr3);
+  REQUIRE(t2s(t->toRPN()) == "2 3 - 2 * 4 2 / +");
+  delete t;
+
+  t = new Tokenizer(expr4);
+  REQUIRE(t2s(t->toRPN()) == "2 3 - 2 % 4 2 ^ + 2 +");
+  delete t;
+
+  t = new Tokenizer(expr5);
+  REQUIRE(t2s(t->toRPN()) == "2 3 - 2 % 4 2 ! + 2 +");
+  delete t;
+}
+
+TEST_CASE("Should evaluate RPN", "Tokenizer") {
+
+}
+

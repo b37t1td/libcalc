@@ -51,10 +51,14 @@ class Tokenizer {
     ~Tokenizer();
     Tokenizer(std::string expression);
     void parse(std::string expression);
+    double evaluate();
+    std::vector<Token *> toRPN();
 
   private:
     void clear();
 };
+
+std::string t2s(std::vector<Token *> tokens);
 
 }
 

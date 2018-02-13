@@ -1,5 +1,7 @@
 #include <libcalc.hpp>
 
+#include <stack>
+
 namespace libcalc {
 
 /*
@@ -73,6 +75,79 @@ void Tokenizer::clear() {
   }
 
   tokens.clear();
+}
+
+std::vector<Token *> Tokenizer::toRPN() {
+  std::vector<Token *> rpn;
+  std::stack<Token *> op;
+
+  for (auto t : tokens) {
+    if (t->type != TOKEN_TYPE.OPERATOR) {
+      rpn.push_back(t);
+      continue;
+    } else if (t->value == "+" || t->value == "-") {
+
+        while( !op.empty() &&
+            (op.top()->value == "-" ||
+             op.top()->value == "+" ||
+             op.top()->value == "*" ||
+             op.top()->value == "/" ||
+             op.top()->value == "%" ||
+             op.top()->value == "!" ||
+             op.top()->value == "^" )) {
+
+          rpn.push_back(op.top());
+          op.pop();
+        }
+
+        op.push(t);
+
+    } else if (t->value == "*" || t->value == "/") {
+
+        while( !op.empty() &&
+            (op.top()->value == "*" ||
+             op.top()->value == "/" ||
+             op.top()->value == "%" ||
+             op.top()->value == "!" ||
+             op.top()->value == "^" )) {
+
+          rpn.push_back(op.top());
+          op.pop();
+        }
+        op.push(t);
+
+    } else if (t->value == "(" ||
+               t->value == "^" ||
+               t->value == "%" ||
+               t->value == "!") {
+
+      op.push(t);
+
+    } else if (t->value == ")") {
+      while (!op.empty() && op.top()->value != "(") {
+        rpn.push_back(op.top());
+        op.pop();
+      }
+      op.pop();
+    }
+  }
+
+  while(!op.empty()) {
+    rpn.push_back(op.top());
+    op.pop();
+  }
+
+  return rpn;
+}
+
+double Tokenizer::evaluate() {
+  std::stack<Token *> op;
+
+  for (Token *t : tokens) {
+    op.push(t);
+  }
+
+  return 0;
 }
 
 }

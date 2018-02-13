@@ -33,4 +33,16 @@ bool isOperator(const char symbol) {
       );
 }
 
+std::string t2s(std::vector<Token *> tokens) {
+  std::string out;
+
+  for (Token *t : tokens) {
+    out += t->value + " ";
+  }
+
+  out.erase(out.length() - 1);
+
+  return out;
+}
+
 }
