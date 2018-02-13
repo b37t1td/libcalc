@@ -1,4 +1,4 @@
-### libcalc [WIP]
+### libcalc
 
 > A very basic math expressions(infix) evaluator
 
